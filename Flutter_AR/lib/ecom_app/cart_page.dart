@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'models/product.dart';
 
+// ignore: must_be_immutable
 class CartPage extends StatelessWidget {
   CartPage({super.key});
   List<Product> products = [
