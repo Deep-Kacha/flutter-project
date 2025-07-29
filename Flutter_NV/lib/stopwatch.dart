@@ -9,10 +9,14 @@ class StopwatchExperiemnt extends StatefulWidget {
 }
 
 class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
-  int seconds = 0;
+  double seconds = 0;
   late Timer timer;
   bool isTicking = false;
+  int millis = 0;
+  final laps = <int>[];
+
   String _secondtoText() => seconds <= 1 ? 'Second' : 'Seconds';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +34,6 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ElevatedButton(
                 onPressed: isTicking ? null : _starttimer,
@@ -49,6 +52,24 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
                 ),
                 child: const Text("Stop"),
               ),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: _lapClick,
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.amber),
+                  foregroundColor: MaterialStatePropertyAll(Colors.white),
+                ),
+                child: const Text("Lap"),
+              ),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: _resetTimer,
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.blue),
+                  foregroundColor: MaterialStatePropertyAll(Colors.white),
+                ),
+                child: const Text("Reset"),
+              ),
             ],
           ),
         ],
@@ -62,11 +83,20 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
   }
 
   void _starttimer() {
-    timer = Timer.periodic(const Duration(seconds: 1), _onTick);
+    timer = Timer.periodic(const Duration(milliseconds: 100), _onTick);
     setState(() {
       isTicking = true;
-      seconds = 0;
     });
+  }
+
+  void _lapClick() {
+    if (isTicking) {
+      setState(() {
+        laps.add(millis);
+        millis = 0;
+      });
+    }
+    print("Laps: $laps");
   }
 
   void _stoptimer() {
@@ -76,17 +106,32 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
     });
   }
 
+  void _resetTimer() {
+    if (isTicking) {
+      timer.cancel();
+    }
+    setState(() {
+      isTicking = false;
+      millis = 0;
+      seconds = 0;
+      laps.clear();
+    });
+  }
+
   void _onTick(Timer timer) {
     if (mounted) {
       setState(() {
-        seconds++;
+        millis += 100;
+        seconds = millis / 1000;
       });
     }
   }
 
   @override
   void dispose() {
-    timer.cancel();
+    if (isTicking) {
+      timer.cancel();
+    }
     super.dispose();
   }
 }
