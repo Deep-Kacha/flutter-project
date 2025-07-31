@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:login_design/ecom_app/login_page.dart';
+import 'package:login_design/ecom_app/splash_page.dart';
 import 'package:login_design/notes_app/notes.dart';
 // import 'cart_page.dart';
 
@@ -21,9 +23,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Ecom App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 149, 112, 214),
+        ),
       ),
-      home: NotesScreen(),
+      home: SplashPage(),
     );
   }
 }
