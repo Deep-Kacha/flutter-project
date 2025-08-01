@@ -9,11 +9,14 @@ class BmiCalcScreen extends StatefulWidget {
   State<BmiCalcScreen> createState() => _BmiCalcScreenState();
 }
 
+// ...existing code...
 class _BmiCalcScreenState extends State<BmiCalcScreen> {
   TextEditingController weightController = TextEditingController();
   TextEditingController heightController = TextEditingController();
   double result = 0;
+  String bmiCategory = '';
   bool isValidated = false;
+
   void validate() {
     if (weightController.text.isNotEmpty && heightController.text.isNotEmpty) {
       isValidated = true;
@@ -21,6 +24,26 @@ class _BmiCalcScreenState extends State<BmiCalcScreen> {
       isValidated = false;
     }
     setState(() {});
+  }
+
+  void calculateBmiCategory(double bmi) {
+    if (bmi < 16) {
+      bmiCategory = "Severe Thinness";
+    } else if (bmi >= 16 && bmi < 17) {
+      bmiCategory = "Moderate Thinness";
+    } else if (bmi >= 17 && bmi < 18.5) {
+      bmiCategory = "Mild Thinness";
+    } else if (bmi >= 18.5 && bmi < 25) {
+      bmiCategory = "Normal";
+    } else if (bmi >= 25 && bmi < 30) {
+      bmiCategory = "Overweight";
+    } else if (bmi >= 30 && bmi < 35) {
+      bmiCategory = "Obese Class I";
+    } else if (bmi >= 35 && bmi < 40) {
+      bmiCategory = "Obese Class II";
+    } else {
+      bmiCategory = "Obese Class III";
+    }
   }
 
   @override
@@ -60,6 +83,7 @@ class _BmiCalcScreenState extends State<BmiCalcScreen> {
                       double wt = double.parse(weightController.text);
                       double ht = double.parse(heightController.text);
                       result = wt / (ht * ht);
+                      calculateBmiCategory(result);
                       setState(() {});
                     }
                   : null,
@@ -67,8 +91,13 @@ class _BmiCalcScreenState extends State<BmiCalcScreen> {
             ),
             SizedBox(height: 20),
             Text(
-              'Result:${result.toStringAsFixed(2)}',
+              'Result: ${result.toStringAsFixed(2)}',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+            ),
+            SizedBox(height: 10),
+            Text(
+              bmiCategory.isNotEmpty ? 'Category: $bmiCategory' : '',
+              style: TextStyle(fontSize: 22, color: Colors.blue),
             ),
           ],
         ),
@@ -76,3 +105,4 @@ class _BmiCalcScreenState extends State<BmiCalcScreen> {
     );
   }
 }
+// ...existing
