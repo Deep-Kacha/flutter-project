@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class StopwatchExperiemnt extends StatefulWidget {
-  const StopwatchExperiemnt({super.key});
+  var name, email;
+  StopwatchExperiemnt({super.key, required this.name, required this.email});
 
   @override
   State<StopwatchExperiemnt> createState() => _StopwatchExperiemntState();
@@ -26,7 +27,7 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Stopwatch Experiment')),
+      appBar: AppBar(title: Text(widget.name)),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,6 +99,8 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
     timer = Timer.periodic(const Duration(milliseconds: 100), _onTick);
     setState(() {
       isTicking = true;
+      millis = 0;
+      laps.clear();
     });
   }
 
@@ -105,6 +108,7 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
     if (isTicking) {
       setState(() {
         laps.add(millis);
+        millis = 0;
       });
     }
   }
