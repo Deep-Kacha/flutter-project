@@ -15,7 +15,13 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
   int millis = 0;
   final laps = <int>[];
 
-  String _secondtoText() => seconds <= 1 ? 'Second' : 'Seconds';
+  String _formatTime(int milliseconds) {
+    final int totalSeconds = milliseconds ~/ 1000;
+    final int minutes = totalSeconds ~/ 60;
+    final int seconds = totalSeconds % 60;
+    final int centiseconds = (milliseconds % 1000) ~/ 10;
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}.${centiseconds.toString().padLeft(2, '0')}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +34,7 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
           Expanded(
             child: Center(
               child: Text(
-                '$seconds ${_secondtoText()}',
+                _formatTime(millis),
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
@@ -92,7 +98,6 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
     timer = Timer.periodic(const Duration(milliseconds: 100), _onTick);
     setState(() {
       isTicking = true;
-      // millis = 0;
     });
   }
 
@@ -100,10 +105,8 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
     if (isTicking) {
       setState(() {
         laps.add(millis);
-        // millis = 0;
       });
     }
-    print(laps);
   }
 
   void _stoptimer() {
@@ -138,11 +141,10 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
     return ListView.builder(
       itemCount: laps.length,
       itemBuilder: (context, index) {
-        final lapTime = laps[index] / 1000;
+        final lapTime = _formatTime(laps[index]);
         return ListTile(
-          title: Text(
-            'Lap ${index + 1}: ${lapTime.toStringAsFixed(2)} seconds',
-          ),
+          leading: const Icon(Icons.timer),
+          title: Text('Lap ${index + 1}: $lapTime'),
         );
       },
     );
