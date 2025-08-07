@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:login_design/Counter/counter.dart';
+import 'package:login_design/bmi_calc/bmi.dart';
 import 'package:login_design/ecom_app/login_page.dart';
 import 'package:login_design/ecom_app/splash_page.dart';
 import 'package:login_design/notes_app/notes.dart';
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 149, 112, 214),
         ),
       ),
-      home: SplashPage(),
+      home: ConterState(),
     );
   }
 }
