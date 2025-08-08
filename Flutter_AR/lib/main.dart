@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:login_design/Counter/counter.dart';
 import 'package:login_design/bmi_calc/bmi.dart';
 import 'package:login_design/ecom_app/login_page.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Ecom App',
       theme: ThemeData(
