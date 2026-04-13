@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nv/currency_converter.dart';
 import 'package:flutter_nv/loginpage.dart';
 // import 'package:flutter_nv/calculator.dart';
 // import 'package:flutter_nv/containerExperiment.dart';
@@ -13,9 +14,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+    return CurrencyConverterApp(
+      // debugShowCheckedModeBanner: false,
+      // home: const LoginScreen(),
     );
   }
 }
